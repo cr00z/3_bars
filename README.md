@@ -1,6 +1,12 @@
 # Ближайшие бары
 
-[FIXME. Здесь будет описание проекта]
+Скрипт обрабатывает список московских баров с сайта [data.mos.ru](https://data.mos.ru/) и возвращает:
+
+* самый большой бар;
+* самый маленький бар;
+* самый близкий бар (текущие gps-координаты пользователь вводит с клавиатуры).
+
+Уже скачанный список можно взять на [devman.org](https://devman.org/fshare/1503831681/4/).
 
 # Как запустить
 
@@ -11,7 +17,16 @@
 ```bash
 
 $ python bars.py # possibly requires call of python3 executive instead of just python
-# FIXME вывести пример ответа скрипта
+Biggest bars:
+Спорт бар «Красная машина»
+Smallest bars:
+БАР. СОКИ
+Соки
+Фреш-бар
+Бар в Деловом центре Яуза
+Input your longitude: 37.63
+Input your latitude: 55.68
+Closest bar: Магазин-Бар «Бирстон»
 
 ```
 
