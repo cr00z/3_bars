@@ -7,16 +7,20 @@ def load_data(filepath):
         return json.load(f)
 
 
-def get_seats_count(bar):
+def get_bar_seats_count(bar):
     return bar['properties']['Attributes']['SeatsCount']
 
 
+def get_bar_name(bar):
+    return bar['properties']['Attributes']['Name']
+
+
 def get_biggest_bar(bars_list):
-    return max(bars_list['features'], key=get_seats_count)
+    return max(bars_list['features'], key=get_bar_seats_count)
 
 
 def get_smallest_bar(bars_list):
-    return min(bars_list['features'], key=get_seats_count)
+    return min(bars_list['features'], key=get_bar_seats_count)
 
 
 def get_closest_bar(bars_list, longitude, latitude):
@@ -27,10 +31,6 @@ def get_closest_bar(bars_list, longitude, latitude):
         return math.hypot(longitude_delta, latitude_delta)
 
     return min(bars_list['features'], key=get_distance)
-
-
-def get_bar_name(bar):
-    return bar['properties']['Attributes']['Name']
 
 
 if __name__ == '__main__':
