@@ -17,13 +17,8 @@
 ```bash
 
 $ python bars.py # possibly requires call of python3 executive instead of just python
-Biggest bars:
-Спорт бар «Красная машина»
-Smallest bars:
-БАР. СОКИ
-Соки
-Фреш-бар
-Бар в Деловом центре Яуза
+Biggest bar: Спорт бар «Красная машина»
+Smallest bar: БАР. СОКИ
 Input your longitude: 37.63
 Input your latitude: 55.68
 Closest bar: Магазин-Бар «Бирстон»
