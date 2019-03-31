@@ -1,10 +1,12 @@
 import json
 import math
+import io
 
 
 def load_data(filepath):
-    with open(filepath, 'r') as f:
-        return json.load(f)
+    with io.open(filepath, encoding='utf-8') as json_file_object:
+        return json.load(json_file_object)
+
 
 
 def get_bar_seats_count(bar):
@@ -16,28 +18,39 @@ def get_bar_name(bar):
 
 
 def get_biggest_bar(bars_list):
-    return max(bars_list['features'], key=get_bar_seats_count)
+    return max(bars_list, key=get_bar_seats_count)
 
 
 def get_smallest_bar(bars_list):
-    return min(bars_list['features'], key=get_bar_seats_count)
+    return min(bars_list, key=get_bar_seats_count)
 
 
-def get_closest_bar(bars_list, longitude, latitude):
+def get_distance(bar):
+    bar_coord = bar['geometry']['coordinates']
+    longitude_delta = bar_coord[0] - user_longitude
+    latitude_delta = bar_coord[1] - user_latitude
+    return math.hypot(longitude_delta, latitude_delta)
 
-    def get_distance(bar):
-        longitude_delta = bar['geometry']['coordinates'][0] - longitude
-        latitude_delta = bar['geometry']['coordinates'][1] - latitude
-        return math.hypot(longitude_delta, latitude_delta)
 
-    return min(bars_list['features'], key=get_distance)
+def get_closest_bar(bars_list):
+    return min(bars_list, key=get_distance)
 
 
 if __name__ == '__main__':
-    moscow_bars = load_data('bars.json')
-    print('Biggest bar: ' + get_bar_name(get_biggest_bar(moscow_bars)))
-    print('Smallest bar: ' + get_bar_name(get_smallest_bar(moscow_bars)))
-    user_longitude = input('Input your longitude: ')
-    user_latitude = input('Input your latitude: ')
-    closest_bar = get_closest_bar(moscow_bars, user_longitude, user_latitude)
-    print('Closest bar: ' + get_bar_name(closest_bar))
+    try:
+        moscow_bars = load_data('bars.json')['features']
+    except FileNotFoundError:
+        exit('Input file not found')
+    except json.decoder.JSONDecodeError:
+        exit('It\'s not a JSON')
+
+    print('Biggest bar: {}'.format(get_bar_name(get_biggest_bar(moscow_bars))))
+    print('Smallest bar: {}'.format(get_bar_name(get_smallest_bar(moscow_bars))))
+    try:
+        # SIC!!! in Russia we use latitude first
+        user_latitude = float(input('Input your latitude: '))
+        user_longitude = float(input('Input your longitude: '))
+    except ValueError:
+        exit('Coordinates must be digital')
+    closest_bar = get_closest_bar(moscow_bars)
+    print('Closest bar: {}'.format(get_bar_name(closest_bar)))
