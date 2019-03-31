@@ -8,9 +8,8 @@ def load_data(filepath):
         with io.open(filepath, encoding='utf-8') as json_file_object:
             return json.load(json_file_object)
     except FileNotFoundError:
-        exit('Input file not found')
     except json.decoder.JSONDecodeError:
-        exit('It\'s not a JSON')
+        return None
 
 
 def get_bar_seats_count(bar):
@@ -42,6 +41,8 @@ def get_closest_bar(bars_list):
 
 if __name__ == '__main__':
     moscow_bars = load_data('bars.json')['features']
+    if moscow_bars is None:
+        exit('Input file not found or not a JSON')
     print('Biggest bar: {}'.format(get_bar_name(get_biggest_bar(moscow_bars))))
     print('Smallest bar: {}'.format(get_bar_name(get_smallest_bar(moscow_bars))))
     try:
