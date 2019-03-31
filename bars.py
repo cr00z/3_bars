@@ -7,8 +7,7 @@ def load_data(filepath):
     try:
         with io.open(filepath, encoding='utf-8') as json_file_object:
             return json.load(json_file_object)
-    except FileNotFoundError:
-    except json.decoder.JSONDecodeError:
+    except (FileNotFoundError, json.decoder.JSONDecodeError):
         return None
 
 
