@@ -8,7 +8,6 @@ def load_data(filepath):
         return json.load(json_file_object)
 
 
-
 def get_bar_seats_count(bar):
     return bar['properties']['Attributes']['SeatsCount']
 
